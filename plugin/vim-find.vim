@@ -12,11 +12,16 @@ if !exists('g:find_opt')
 endif
 
 function! s:Find(content)
-	let l:cmd = g:find_binary . ' ' . g:find_opt .' ''' . a:content . ''' | sort'
+	if empty(a:content)
+		let l:text = expand("<cfile>")
+	else
+		let l:text = a:content
+	endif
+	let l:cmd = g:find_binary . ' ' . g:find_opt .' ''' . l:text . ''' | sort'
 	let l:find_result = systemlist(l:cmd)
 	let l:qflist = []
 	if len(l:find_result) == 0
-		echo 'No match found for ' . a:content
+		echo 'No match found for ' . l:text
 		return
 	endif
 	for file in l:find_result
