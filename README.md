@@ -1,7 +1,7 @@
 # vim-find
 
 ```
-:Find <string|pattern>
+:Find <string|pattern>:<line>
 ```
 
 File name under cursor will be searched if no argument is passed to find.
