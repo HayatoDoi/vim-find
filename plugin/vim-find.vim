@@ -30,7 +30,7 @@ function! s:Find(content)
 		return
 	endif
 	if matchstr(l:file_line, '^\d*$') == ""
-		echo "Invalid file name"
+		echo "Invalid file line"
 		return
 	endif
 	let l:cmd = g:find_binary . ' ' . g:find_opt .' ''' . l:file_name . ''' | sort'
