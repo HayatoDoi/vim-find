@@ -29,7 +29,7 @@ function! s:Find(content)
 		echo "Invalid file name"
 		return
 	endif
-	if matchstr(l:file_line, '^\d*$') == ""
+	if l:file_line != -1 && matchstr(l:file_line, '^\d*$') == ""
 		echo "Invalid file line"
 		return
 	endif
