@@ -35,7 +35,7 @@ function! s:Find(content)
 	endif
 	let l:file_path_list = split(l:file_path, '/')
 	let l:file_name = l:file_path_list[len(l:file_path_list) - 1]
-	let l:cmd = g:find_binary . ' ' . g:find_opt .' ''*' . l:file_name . '*'' | grep -E ''*' . l:file_path . '*'' | sort'
+	let l:cmd = g:find_binary . ' ' . g:find_opt .' ''*' . l:file_name . '*'' | grep ''' . l:file_path . ''' | sort'
 	let l:find_result = systemlist(l:cmd)
 	let l:qflist = []
 	if len(l:find_result) == 0
