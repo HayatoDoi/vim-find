@@ -8,7 +8,7 @@ if !exists('g:find_binary')
 	let g:find_binary = 'find'
 endif
 if !exists('g:find_opt')
-	let g:find_opt = ' . -name '
+	let g:find_opt = ' . -type f -name '
 endif
 
 function! s:Find(content)
@@ -19,10 +19,10 @@ function! s:Find(content)
 	endif
 	let l:text_list = split(l:text, ':')
 	if len(l:text_list) == 1
-		let l:file_name = l:text_list[0]
+		let l:file_path = l:text_list[0]
 		let l:file_line = -1
 	elseif len(l:text_list) == 2
-		let l:file_name = l:text_list[0]
+		let l:file_path = l:text_list[0]
 		let l:file_line = l:text_list[1]
 		let l:file_line = substitute(l:file_line, ' ', '', 'g')
 	else
@@ -33,11 +33,13 @@ function! s:Find(content)
 		echo "Invalid file line"
 		return
 	endif
-	let l:cmd = g:find_binary . ' ' . g:find_opt .' ''' . l:file_name . ''' | sort'
+	let l:file_path_list = split(l:file_path, '/')
+	let l:file_name = l:file_path_list[len(l:file_path_list) - 1]
+	let l:cmd = g:find_binary . ' ' . g:find_opt .' ''*' . l:file_name . '*'' | grep -E ''*' . l:file_path . '*'' | sort'
 	let l:find_result = systemlist(l:cmd)
 	let l:qflist = []
 	if len(l:find_result) == 0
-		echo 'No match found for ' . l:file_name
+		echo 'No match found for ' . l:file_path
 		return
 	endif
 	for file in l:find_result
